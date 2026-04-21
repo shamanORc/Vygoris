@@ -1,276 +1,196 @@
-# Vigorys Nuclear Edition
+# 🔐 Vygoris Production - Real Security Scanner for Bug Bounty
 
-Advanced Business Logic Vulnerability Scanner - CLI-only, Multi-Agent System, LLM-powered
+**Vygoris Production** é uma ferramenta CLI de segurança de classe empresarial para Bug Bounty, desenvolvida para realizar exploração real, gerar Proof of Concepts verificados e integrar com Burp Suite.
 
-## Features
+## ✨ Características
 
-✨ **7 Nuclear Features:**
-1. **Multi-Agent System** (ReAct + Chain-of-Thought)
-2. **Stateful Multi-User Simulation** (parallel role sessions)
-3. **Dynamic LLM-guided Fuzzing** (intelligent mutations)
-4. **Custom Business Rule Engine** (YAML/natural language)
-5. **Executable Attack Graphs** (PoC generation)
-6. **Self-Improvement Loop** (learning from findings)
-7. **Terminal Output** (real-time progress, ASCII art)
+### 🎯 Exploração Real
+- ✅ HTTP requests reais com Playwright
+- ✅ Payloads reais para SQL Injection, XSS, IDOR, Auth Bypass
+- ✅ Captura de evidências e dados
+- ✅ Screenshots e análise de DOM
 
-🚀 **Integrated Bases:**
-- **bizlogic** - Fast heuristic-based detection
-- **strix** - Autonomous AI agents with ReAct
-- **seclab-taskflow** - Agentic orchestration
+### 🛡️ Zero False Positives
+- ✅ Validação multi-check para cada vulnerabilidade
+- ✅ Confirmação de exploração real
+- ✅ Análise de resposta e timing
+- ✅ Detecção de estado inconsistente
 
-📊 **Scan Modes:**
-- `quick` - Fast heuristic-based scan
-- `normal` - Balanced scan with LLM reasoning
-- `ultra` - Deep analysis with all features
-- `nuclear` - Maximum power (all agents + fuzzing)
+### 📊 Relatórios Profissionais
+- ✅ Burp Suite XML export
+- ✅ HackerOne format
+- ✅ Bugcrowd format
+- ✅ Intigriti format
+- ✅ Markdown reports
 
-## Installation
+### 🔗 Integração
+- ✅ Burp Suite API integration
+- ✅ Multi-platform export
+- ✅ CVSS scoring
+- ✅ Remediation suggestions
+
+## 🚀 Instalação
 
 ```bash
-# Clone repository
+# Clone o repositório
 git clone https://github.com/shamanORc/Vygoris.git
-cd Vygoris/vygoris-nuclear-core
+cd Vygoris
 
-# Install dependencies
+# Instale as dependências
 pip install -r requirements.txt
 
-# Download Playwright browsers
+# Instale browsers Playwright
 playwright install
-
-# Configure environment
-cp .env.example .env
-# Edit .env with your LLM API key
 ```
 
-## Quick Start
+## 📖 Uso
 
-### Basic Nuclear Scan
+### Scan básico
 ```bash
-python vigorys.py scan --url https://example.com --mode nuclear --llm grok
+python vygoris_cli.py https://example.com
 ```
 
-### With Custom Business Rules
+### Exportar para HackerOne
 ```bash
-python vigorys.py scan --url https://example.com --mode nuclear --rules business_rules.yaml
+python vygoris_cli.py https://example.com --format hackerone
 ```
 
-### Quick Scan (Fast)
+### Exportar para Burp Suite
 ```bash
-python vigorys.py scan --url https://example.com --mode quick
+python vygoris_cli.py https://example.com --format burp
 ```
 
-### Demo Mode
+### Exportar todos os formatos
 ```bash
-python vigorys.py demo
+python vygoris_cli.py https://example.com --format all
 ```
 
-### Generate Rules Template
+## 🔍 Detecções Suportadas
+
+| Vulnerabilidade | Tipo | CVSS | Status |
+|---|---|---|---|
+| SQL Injection | CRITICAL | 9.8 | ✅ |
+| Cross-Site Scripting (XSS) | HIGH | 7.1 | ✅ |
+| Insecure Direct Object Reference (IDOR) | HIGH | 7.5 | ✅ |
+| Authentication Bypass | CRITICAL | 9.9 | ✅ |
+| Race Condition | MEDIUM | 5.3 | ✅ |
+| Business Logic Bypass | HIGH | 7.3 | ✅ |
+
+## 📁 Estrutura do Projeto
+
+```
+vygoris-production/
+├── real_http_client.py      # Cliente HTTP real com Playwright
+├── payload_injector.py      # Payloads reais de exploração
+├── poc_generator.py         # Gerador de PoC com evidências
+├── burp_integration.py      # Integração com Burp Suite
+├── bug_bounty_formats.py    # Formatos de plataformas
+├── validation_engine.py     # Validação e zero false positives
+├── vygoris_cli.py          # CLI principal
+├── requirements.txt         # Dependências Python
+└── README.md               # Este arquivo
+```
+
+## 🔧 Configuração
+
+### Variáveis de Ambiente
+
 ```bash
-python vigorys.py generate-rules --output my_rules.yaml
+# Burp Suite API
+export BURP_URL=http://localhost:8080
+
+# Timeout de requisição
+export REQUEST_TIMEOUT=30
+
+# Modo debug
+export DEBUG=1
 ```
 
-## Usage Examples
+## 🧪 Exemplos
 
-### Example 1: Scan with Export
+### Exemplo 1: Scan completo com export
 ```bash
-python vigorys.py scan \
-  --url https://myapp.com \
-  --mode nuclear \
-  --llm grok \
-  --export report.json \
-  --format json
+python vygoris_cli.py https://pagardasmei.com.br --format all
 ```
 
-### Example 2: Parallel Scanning
+Gera:
+- `vygoris_report_*.json` - Relatório JSON
+- `vygoris_burp_*.xml` - Burp Suite XML
+- `vygoris_h1_*.json` - HackerOne format
+- `vygoris_bugcrowd_*.json` - Bugcrowd format
+- `vygoris_intigriti_*.json` - Intigriti format
+- `vygoris_report_*.md` - Markdown report
+
+## 🛠️ Desenvolvimento
+
+### Adicionar novo tipo de validação
+
+```python
+from validation_engine import ValidationEngine
+
+# Adicione método estático
+@staticmethod
+def validate_custom_vuln(data: str) -> Tuple[bool, Dict]:
+    evidence = {"checks_passed": 0}
+    # Implementar lógica
+    return is_valid, evidence
+```
+
+### Adicionar novo payload
+
+```python
+from payload_injector import PayloadInjector
+
+# Adicione ao dicionário de payloads
+CUSTOM_PAYLOADS = [
+    "payload1",
+    "payload2"
+]
+```
+
+## 📋 Checklist de Segurança
+
+- [ ] Testar em ambiente autorizado
+- [ ] Obter permissão escrita do proprietário
+- [ ] Usar VPN/proxy se necessário
+- [ ] Documentar todas as descobertas
+- [ ] Seguir responsabilidade disclosure
+- [ ] Respeitar rate limits
+
+## 🐛 Troubleshooting
+
+### Erro: "Playwright browser not found"
 ```bash
-python vigorys.py scan \
-  --url https://myapp.com \
-  --mode ultra \
-  --workers 8 \
-  --timeout 600
+playwright install
 ```
 
-### Example 3: Custom Rules
+### Erro: "Connection timeout"
 ```bash
-python vigorys.py scan \
-  --url https://myapp.com \
-  --mode nuclear \
-  --rules business_rules.yaml
+python vygoris_cli.py https://example.com --timeout 60
 ```
 
-## Business Rules Format
-
-Create a `business_rules.yaml` file:
-
-```yaml
-rules:
-  - name: "Payment Approval Limit"
-    description: "Regular users cannot approve payments > R$ 1000"
-    condition: "user_role == 'user' AND payment_amount > 1000"
-    expected_result: "DENY"
-    severity: "HIGH"
-  
-  - name: "Order Status Flow"
-    description: "Orders must follow specific status transitions"
-    condition: "order_status_transition"
-    expected_flow:
-      - "PENDING"
-      - "PROCESSING"
-      - "SHIPPED"
-      - "DELIVERED"
-    severity: "MEDIUM"
-  
-  - name: "Admin-Only Actions"
-    description: "Only admins can delete users"
-    condition: "action == 'delete_user' AND user_role != 'admin'"
-    expected_result: "DENY"
-    severity: "CRITICAL"
+### Erro: "Invalid URL"
+```bash
+# Use URL completa com protocolo
+python vygoris_cli.py https://example.com
 ```
 
-## Output Format
+## 📝 Licença
 
-### Terminal Output
-- Real-time progress with spinners
-- Colored severity indicators (🔴 Critical, 🟠 High, 🟡 Medium, 🔵 Low)
-- Organized findings table
-- ASCII art attack flow visualization
+Proprietary - Uso exclusivo para Bug Bounty autorizado
 
-### Report Export (JSON)
-```json
-{
-  "scan_id": "scan_001",
-  "target": "https://example.com",
-  "mode": "nuclear",
-  "status": "completed",
-  "findings": [
-    {
-      "id": "finding_001",
-      "type": "authorization_bypass",
-      "severity": "CRITICAL",
-      "confidence": "HIGH",
-      "description": "...",
-      "steps_to_reproduce": [...],
-      "poc": "...",
-      "fix_suggestion": "..."
-    }
-  ],
-  "attack_graph": {...},
-  "summary": {...}
-}
-```
+## 👨‍💻 Autor
 
-## Architecture
+Vygoris Team - Security Research
 
-```
-vigorys-nuclear-core/
-├── vigorys.py                 # Main CLI entry point
-├── requirements.txt           # Python dependencies
-├── .env.example               # Configuration template
-│
-├── core/
-│   ├── cli.py                 # CLI handler
-│   ├── config.py              # Configuration
-│   └── logger.py              # Logging
-│
-├── agents/
-│   ├── orchestrator.py        # Multi-Agent coordinator
-│   ├── recon_agent.py         # Crawling
-│   ├── role_simulator.py      # Multi-user sessions
-│   ├── logic_reasoner.py      # LLM reasoning
-│   ├── validator_exploiter.py # PoC generation
-│   └── triage_reporter.py     # Finding deduplication
-│
-├── engines/
-│   ├── bizlogic_engine.py     # bizlogic integration
-│   ├── strix_engine.py        # strix integration
-│   ├── seclab_engine.py       # seclab-taskflow integration
-│   ├── llm_reasoner.py        # LLM reasoning
-│   └── fuzzer.py              # Dynamic fuzzing
-│
-├── modules/
-│   ├── advanced_analyzer.py   # 12 detection mechanisms
-│   ├── jwt_analyzer.py        # JWT analysis
-│   ├── api_key_detector.py    # API key detection
-│   ├── compliance_checker.py  # OWASP/CWE/CVSS
-│   ├── attack_flow.py         # Attack visualization
-│   ├── parallel_scanner.py    # Multi-threading
-│   ├── business_rules.py      # Custom rules engine
-│   └── executable_graphs.py   # Attack chain execution
-│
-├── output/
-│   ├── formatter.py           # Terminal formatting
-│   ├── reporter.py            # Report generation
-│   └── ascii_art.py           # ASCII visualizations
-│
-└── tests/
-    ├── test_agents.py
-    ├── test_engines.py
-    └── test_cli.py
-```
+## 🤝 Contribuições
 
-## Scan Workflow
+Para contribuições, abra uma issue ou pull request.
 
-```
-Input URL
-  ↓
-[ReconAgent] Crawl target
-  ↓
-[RoleSimulator] Create isolated sessions (User/Admin/Guest)
-  ↓
-[LogicReasoner] LLM-powered business logic analysis
-  ↓
-[ValidatorExploiter] Generate and validate PoCs
-  ↓
-[TriageReporter] Deduplicate, calculate CVSS, map OWASP/CWE
-  ↓
-[Output] Terminal display + Report export
-```
+## 📞 Suporte
 
-## Ethical Notice
-
-⚠️ **IMPORTANT**: This tool is designed for authorized security testing ONLY.
-
-- You must have explicit written permission from the system owner
-- Unauthorized access to computer systems is ILLEGAL
-- Violations may result in criminal charges
-- The developers assume no liability for misuse
-
-## Requirements
-
-- Python 3.9+
-- Playwright (for browser automation)
-- LLM API access (Grok, Claude, or OpenAI)
-- 4+ GB RAM recommended
-- Internet connection
-
-## Troubleshooting
-
-### "Connection refused" error
-- Ensure target URL is accessible
-- Check firewall/proxy settings
-- Try with `--timeout 600` for slow targets
-
-### "LLM API error"
-- Verify LLM_API_KEY in .env
-- Check API quota and rate limits
-- Try different LLM provider
-
-### "Playwright error"
-- Run `playwright install` to download browsers
-- Check for browser compatibility
-
-## Support
-
-For issues, questions, or feature requests:
-1. Check the documentation
-2. Review example configurations
-3. Run with `--verbose` for debugging
-4. Check logs in `vigorys.log`
-
-## License
-
-MIT License - See LICENSE file for details
+Para suporte, abra uma issue no repositório.
 
 ---
 
-**Vigorys Nuclear Edition v2.0** - The most powerful CLI tool for Business Logic Vulnerability detection
+**⚠️ AVISO LEGAL:** Esta ferramenta é destinada apenas para testes de segurança autorizados. Uso não autorizado é ilegal.
